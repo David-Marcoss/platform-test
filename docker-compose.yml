@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-flask
+    environment:
+      POSTGRES_DB: flaskDB
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432"
+    volumes:
+      - flask_db_volume:/var/lib/postgresql/data
+ 
+  back-end:
+    container_name: back-end
+
+    build:
+      context: ./Back-end/
+    ports:
+      - 5000:5000
+    depends_on: 
+      - db
+
+volumes:
+  flask_db_volume:

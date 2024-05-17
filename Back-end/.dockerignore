@@ -1,0 +1,5 @@
+venv
+migrations
+.dockerignore
+.git
+.gitignore
