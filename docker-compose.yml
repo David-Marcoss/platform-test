@@ -19,9 +19,19 @@ services:
     build:
       context: ./Back-end/
     ports:
-      - 5000:5000
+      - 4200
     depends_on: 
       - db
+    
+  front-end:
+    container_name: front-end
+
+    build:
+      context: ./Front-end/
+    ports:
+      - 4500:4500
+    depends_on: 
+      - back-end
 
 volumes:
   flask_db_volume:
