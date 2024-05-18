@@ -13,7 +13,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
 
-    def __init__(self, name, email, password):
+    def __init__(self,email, password, name=""):
         self.name = name
         self.email = email
         self.password = self.generate_hash(password)  # A senha é criptografada apenas uma vez ao criar o usuário

@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/user/register/register.component
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { UsersComponent } from './components/user/users/users.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
+import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: "",
@@ -16,6 +17,7 @@ const routes: Routes = [
       component: ProfileComponent,
       children: [
         { path: 'edit', component: UserFormComponent },
+        { path: 'reset-password', component: ResetPasswordComponent },
       ]
     },
     { path: 'users', component: UsersComponent },

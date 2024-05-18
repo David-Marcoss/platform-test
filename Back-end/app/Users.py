@@ -124,8 +124,10 @@ def login():
     except ValidationError as err:
         return jsonify(err.messages), 422
 
+
 @bp_users.route('/reset_password/<int:id>', methods=['POST'])
-def reset_password():
+@jwt_required()
+def reset_password(id):
     data = request.get_json()
     schema = PasswordResetSchema()
     errors = schema.validate(data)
@@ -139,10 +141,14 @@ def reset_password():
         old_password = data['old_password']
         new_password = data['new_password']
         
+        if( get_jwt_identity() != user_data.id):
+                return jsonify({"message": "You do not have authorization to update this user"}), 403
+        
         if not user_data.verify_password(old_password):
             return jsonify({"error": "Old password is incorrect"}), 400
+        
 
-        user_data.password = new_password
+        user_data.password = user_data.generate_hash(new_password)
         
         current_app.db.session.commit()
             

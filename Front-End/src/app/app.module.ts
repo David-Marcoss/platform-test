@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { UsersComponent } from './components/user/users/users.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
+import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { UserFormComponent } from './components/user/user-form/user-form.compone
     ProfileComponent,
     UsersComponent,
     UserFormComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
