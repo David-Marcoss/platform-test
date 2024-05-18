@@ -9,56 +9,110 @@ export class UserService {
 
   constructor(private axios: AxiosService) { }
 
-  users: User[] | undefined;
-  isAuthenticated: boolean = false
-  authToken: string | undefined
+  isAuthenticated: boolean = false;
+  authToken: string | undefined;
+  userLoggedId: number | undefined;
 
-  isAutehnticated(){
-    return this.isAutehnticated
+  userAuthenticated(): boolean {
+    return this.isAuthenticated;
   }
 
-  setAuth(token: string){
-    this.authToken = token
-    this.isAuthenticated = true
+  setAuth(token: string, userLoggedId: number): void {
+    this.authToken = token;
+    this.isAuthenticated = true;
+    this.userLoggedId = userLoggedId
+
+    this.axios.setAuthToken(token);
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("userLoggedId", userLoggedId.toString())
   }
 
-  logout(){
-    this.authToken = undefined
-    this.isAuthenticated = false
-  }
+  getAuthLocals(): void {
+    const token = localStorage.getItem('token');
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    const userLoggedId = localStorage.getItem("userLoggedId")
 
-  async create(user : User){
+    if (token && isAuthenticated && userLoggedId) {
+      this.authToken = token;
+      this.isAuthenticated = true;
+      this.userLoggedId = parseInt(userLoggedId);
 
-    const url = "http://localhost:5000/"
-    try {
-
-      await this.axios.post(url + "users/", user)
-
-      return {sucsess: true}
-
-    } catch (error: any) {
-
-      return {sucsess: false, error: error.response.data}
+      this.axios.setAuthToken(token);
     }
 
   }
 
-  async login(user : User){
+  logout(): void {
+    this.authToken = undefined;
+    this.isAuthenticated = false;
 
-    const url = "http://localhost:5000/"
+    localStorage.removeItem("token");
+    localStorage.removeItem("isAuthenticated");
 
+    this.axios.setAuthToken("");
+  }
+
+  async create(user: User): Promise<{ success: boolean, error?: number }> {
+    const url = "http://localhost:5000/";
+    try {
+      await this.axios.post(url + "users/", user);
+      return { success: true };
+    } catch (error: any) {
+      console.log(error);
+      return { success: false, error: error.response.status };
+    }
+  }
+
+  async login(user: User): Promise<{ success: boolean, error?: number }> {
+    const url = "http://localhost:5000/";
     try {
 
-      const req: any = await this.axios.post(url + "users/login", {email: user.email, password: user.password})
+      const req: any = await this.axios.post(url + "users/login", { email: user.email, password: user.password });
 
-      this.setAuth(req.data.access_token)
+      this.setAuth(req.access_token, req.userId);
 
-      return {sucsess: true}
+      return { success: true };
 
     } catch (error: any) {
-      const msg = error.response.data || "Erro ao logar"
 
-      return {sucsess: false, error: msg}
+      return { success: false, error: error.response.status };
+    }
+  }
+
+  async getUser(): Promise<User | undefined>{
+    const url = "http://localhost:5000/";
+
+    try {
+      const req: any = await this.axios.get(url + "users/" + this.userLoggedId);
+
+      return req;
+
+    } catch (error) {
+
+      console.log(error)
+
+      return undefined
+    }
+  }
+
+  async update(data: User): Promise<{ success: boolean, error?: number, user?: User | any }> {
+    const url = "http://localhost:5000/";
+    try {
+      const req = await this.axios.put(url + "users/" + this.userLoggedId, data);
+
+      const user = req;
+
+      return { success: true, user: req };
+
+    } catch (error: any) {
+
+      console.log(error);
+      console.log(error.response.data);
+
+      return { success: false, error: error.response.status };
+
     }
 
   }

@@ -7,7 +7,10 @@ import axios, { AxiosInstance } from 'axios';
 export class AxiosService {
   private axiosClient: AxiosInstance;
 
+  private authToken: string | null = null;
+
   constructor() {
+
     this.axiosClient = axios.create({
       baseURL: 'https://jsonplaceholder.typicode.com',
       timeout: 1000,
@@ -15,6 +18,20 @@ export class AxiosService {
         'Content-Type': 'application/json'
       }
     });
+
+    this.axiosClient.interceptors.request.use(config => {
+      if (this.authToken) {
+        config.headers['Authorization'] = this.authToken;
+      }
+      return config;
+    }, error => {
+      return Promise.reject(error);
+    });
+
+  }
+
+  public setAuthToken(token: string): void {
+    this.authToken = token;
   }
 
   public get<T>(url: string): Promise<T> {

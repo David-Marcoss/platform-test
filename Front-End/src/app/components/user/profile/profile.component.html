@@ -1,0 +1,30 @@
+<div class="profile">
+    <div class="user-profile text-center">
+      <span><i class="icon icon-user" id=""></i></span>
+    </div>
+
+    <div class="text-center">
+      <h5 class="text">Perfil</h5>
+    </div>
+
+    <div class="profile-links">
+      <ul class="nav justify-content-center border-bottom">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" [routerLink]="['/profile/edit']">Editar dados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Redefinir senha</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Excluir conta</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class=" main">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+</div>

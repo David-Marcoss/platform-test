@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -10,18 +11,29 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   // instancia formulario
   userForm: FormGroup = new FormGroup({})
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+
     this.initializeForm()
+
+    if(this.userService.userAuthenticated()){
+
+      console.log('autenticado')
+      console.log(this.userService.userAuthenticated())
+
+      this.router.navigate(['/']);
+    }
+
   }
 
   initializeForm(){
@@ -37,16 +49,21 @@ export class LoginComponent {
   async login(){
     if(this.userForm.valid){
 
-      console.log(this.userForm.value)
+      const req = await this.userService.login(this.userForm.value)
 
-      this.userForm.reset
+      if(req.success){
 
-      if(await this.userService.login(this.userForm.value)){
+        this.toastr.success('Login feito com sucesso!',"Bem vindo!");
+        this.userForm.reset()
 
         this.router.navigate(['/']);
-
       }else{
-        alert("Erro ao criar usuário")
+
+        if(req.error == 422){
+          this.toastr.error('Verifique se seu e-mail e senha estão coretos!','Credenciais invalidas!');
+        }else{
+          this.toastr.error('Erro ao criar logar!');
+        }
       }
 
     }

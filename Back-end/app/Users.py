@@ -3,7 +3,7 @@ from flask_cors import cross_origin
 from flask_jwt_extended import  create_access_token, jwt_required, get_jwt_identity, unset_access_cookies
 
 from.model import User
-from .serializer import UserSchema
+from .serializer import PasswordResetSchema, UserSchema
 from marshmallow import ValidationError
 
 from datetime import datetime, timedelta, timezone
@@ -116,12 +116,38 @@ def login():
 
             access_token = create_access_token(identity=user_data.id, expires_delta=timedelta(hours=8))
 
-            return jsonify({"access_token": "Bearer " + access_token}), 200
+            return jsonify({"access_token": "Bearer " + access_token, "userId": user_data.id}), 200
 
         else:
             raise ValidationError('Invalid credentials')
 
-
     except ValidationError as err:
         return jsonify(err.messages), 422
+
+@bp_users.route('/reset_password/<int:id>', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    schema = PasswordResetSchema()
+    errors = schema.validate(data)
+    
+    if errors:
+        return jsonify(errors), 400
+    
+    user_data = User.query.filter_by(id=id).first()
+
+    if user_data:
+        old_password = data['old_password']
+        new_password = data['new_password']
+        
+        if not user_data.verify_password(old_password):
+            return jsonify({"error": "Old password is incorrect"}), 400
+
+        user_data.password = new_password
+        
+        current_app.db.session.commit()
+            
+
+        return jsonify({"message": "Password updated successfully"}), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
 

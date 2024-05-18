@@ -1,0 +1,29 @@
+<div class="registration-form">
+  <form [formGroup]="userForm">
+      <h3 class="text-center mb-5"> Editar dados </h3>
+
+      <div class="form-group mb-3">
+          <input type="text" formControlName="name" class="form-control item" id="username" placeholder="Nome"
+          [class.is-invalid]="userForm.get('name')?.errors && userForm.get('name')?.touched">
+          <div class="invalid-feedback input-invalid"> Preencha o nome corretamente </div>
+      </div>
+
+      <div class="form-group mb-3">
+          <input type="text" formControlName="email" class="form-control item" id="email" placeholder="E-mail"
+          [class.is-invalid]="userForm.get('email')?.errors && userForm.get('email')?.touched">
+          <div class="invalid-feedback input-invalid"> Preencha o E-mail corretamente </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <input type="password" formControlName="password" class="form-control item" id="password" placeholder="Senha"
+        [class.is-invalid]="userForm.get('password')?.errors && userForm.get('password')?.touched">
+        <div class="invalid-feedback input-invalid"> Preencha a senha corretamente, a senha deve ter no minimo 8 caracteres </div>
+      </div>
+
+      <div class="form-group mt-4">
+        <button type="button" (click)="editUser()" [disabled]="!userForm.valid" class=" form-control item btn btn-info">
+          Salvar alterações
+        </button>
+    </div>
+  </form>
+</div>

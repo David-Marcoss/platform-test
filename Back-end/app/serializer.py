@@ -1,7 +1,7 @@
 import re
-from flask_marshmallow import Marshmallow
+from flask_marshmallow import Marshmallow, Schema
 from marshmallow import fields, validate, ValidationError, validates
-from marshmallow_sqlalchemy import SQLAlchemySchema, auto_field
+from marshmallow_sqlalchemy import auto_field
 from .model import User
 
 ma = Marshmallow()
@@ -25,3 +25,9 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         
         if User.query.filter_by(email=value).first():
             raise ValidationError('E-mail already registered !!')
+
+
+class PasswordResetSchema(Schema):
+    old_password = fields.Str(required=True, validate=validate.Length(min=8, max=60))
+    new_password = fields.Str(required=True, validate=validate.Length(min=8, max=60))
+

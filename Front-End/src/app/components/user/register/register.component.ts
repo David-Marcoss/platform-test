@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -8,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
 
   // instancia formulario
   userForm: FormGroup = new FormGroup({})
@@ -16,11 +18,18 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.initializeForm()
+
+    if(this.userService.userAuthenticated()){
+      this.router.navigate(['/']);
+    }else{
+      this.initializeForm()
+    }
+
   }
 
   initializeForm(){
@@ -37,18 +46,25 @@ export class RegisterComponent {
   async createUser(){
     if(this.userForm.valid){
 
-      console.log(this.userForm.value)
+      const req = await this.userService.create(this.userForm.value)
 
-      this.userForm.reset
+      if(req.success){
 
-      if(await this.userService.create(this.userForm.value)){
+        this.toastr.success('Faça login para acessar sistema!','Conta criada com sucesso!');
+        this.userForm.reset()
+
         this.router.navigate(['/login']);
       }else{
-        alert("Erro ao criar usuário")
+
+        if(req.error == 422){
+          this.toastr.error('Email já cadastrado!', 'Erro ao criar conta!');
+        }else{
+          this.toastr.error('Erro ao criar conta!');
+        }
       }
 
     }
   }
 
-}import { UserService } from '../../../services/user.service';
+}
 
