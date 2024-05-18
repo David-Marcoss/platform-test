@@ -1,0 +1,34 @@
+<div class="registration-form">
+  <form [formGroup]="userForm">
+      <div class="form-icon">
+          <span><i class="icon icon-user"></i></span>
+      </div>
+
+
+      <h3 class="text-center mb-5"> Login </h3>
+
+      <div class="form-group mb-3">
+          <input type="text" formControlName="email" class="form-control item" id="email" placeholder="E-mail"
+          [class.is-invalid]="userForm.get('email')?.errors && userForm.get('email')?.touched">
+          <div class="invalid-feedback input-invalid"> Preencha o E-mail corretamente </div>
+      </div>
+
+      <div class="form-group mb-3">
+          <input type="password" formControlName="password" class="form-control item" id="password" placeholder="Senha"
+          [class.is-invalid]="userForm.get('password')?.errors && userForm.get('password')?.touched">
+          <div class="invalid-feedback input-invalid"> Preencha a senha corretamente, a senha deve ter no minimo 8 caracteres </div>
+      </div>
+
+      <div class="form-group mt-4">
+          <button type="button" (click)="login()" [disabled]="!userForm.valid" class=" form-control item btn btn-info">
+            Cadastrar
+          </button>
+      </div>
+      <hr>
+      <div class="form-group mb-5">
+        <a type="button"routerLink="/register" class=" form-control item btn btn btn-dark">
+          Não possui uma conta ? Registre-se
+        </a>
+    </div>
+  </form>
+</div>

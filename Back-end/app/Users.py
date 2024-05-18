@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app, jsonify, request
+from flask_cors import cross_origin
 from flask_jwt_extended import  create_access_token, jwt_required, get_jwt_identity, unset_access_cookies
 
 from.model import User
@@ -7,8 +8,9 @@ from marshmallow import ValidationError
 
 from datetime import datetime, timedelta, timezone
 
-bp_users = Blueprint("books", __name__)
+bp_users = Blueprint("users", __name__)
 
+ 
 @bp_users.route("/",methods = ["GET"])
 @jwt_required()
 def finAll():
@@ -16,7 +18,7 @@ def finAll():
     schema = UserSchema(many=True)
 
     return schema.jsonify(User.query.all()) , 200
-
+ 
 @bp_users.route("/<int:id>",methods = ["GET"])
 @jwt_required()
 def finOne(id):
@@ -44,10 +46,12 @@ def create():
         current_app.db.session.commit()
         
         return schema.jsonify(user_data), 201
+        
 
     except ValidationError as err:
 
         return jsonify(err.messages), 422
+    
     
 
 @bp_users.route("/<int:id>",methods = ["DELETE"])

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 from flask import Flask
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from .model import configure as config_db
 from .serializer import configure as config_ma
@@ -20,6 +21,8 @@ def create_app():
     config_db(app)
     config_ma(app)
     config_jwt(app)
+    
+    CORS(app, support_credentials=True)
 
     Migrate(app, app.db)
 
