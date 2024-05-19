@@ -28,4 +28,22 @@ class User(db.Model):
     def __repr__(self):
             return '<User %r>' % self.username
 
+class Route(db.Model):
+    __tablename__ = 'routes'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('User', back_populates='routes')
+    points = db.relationship('RoutePoint', back_populates='route', cascade='all, delete-orphan')
+
+class RoutePoint(db.Model):
+    __tablename__ = 'route_points'
+    id = db.Column(db.Integer, primary_key=True)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    point_number = db.Column(db.Integer, nullable=False)
+    route_id = db.Column(db.Integer, db.ForeignKey('routes.id'), nullable=False)
+    route = db.relationship('Route', back_populates='points')
+
+User.routes = db.relationship('Route', back_populates='user', cascade='all, delete-orphan')
+
     

@@ -23,6 +23,9 @@ import { DeleteComponent } from './components/user/delete/delete.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 
+import { HttpClientModule } from '@angular/common/http';
+import { RoutesComponent } from './components/route/routes/routes.component';
+
 
 
 @NgModule({
@@ -37,6 +40,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     ResetPasswordComponent,
     DeleteComponent,
     DashboardComponent,
+    RoutesComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     FontAwesomeModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
