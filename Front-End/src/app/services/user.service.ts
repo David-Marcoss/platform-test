@@ -40,6 +40,9 @@ export class UserService {
       this.userLoggedId = parseInt(userLoggedId);
 
       this.axios.setAuthToken(token);
+
+    }else{
+      this.logout();
     }
 
   }

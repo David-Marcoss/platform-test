@@ -7,6 +7,8 @@ import { Observable, forkJoin, map } from 'rxjs';
 import { RouteInfos } from '../models/RouteInfos';
 
 
+// RoutesService realiza as operações de mapas interagingo com a api do googlemaps.
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +18,7 @@ export class RoutesService {
     private axios: AxiosService,
     private http: HttpClient
   ) { }
+
   apiKey: String = ""
   mainRoute: Route[] = [];
 
@@ -188,4 +191,17 @@ export class RoutesService {
 
   }
 
+  isValidCoordinates(latitude: number, longitude: number): boolean {
+    // Faixas válidas para latitude e longitude
+    const validLatitudeRange = [-90, 90];
+    const validLongitudeRange = [-180, 180];
+
+    // Verifica se a latitude e longitude estão dentro das faixas válidas
+    const isLatitudeValid = latitude >= validLatitudeRange[0] && latitude <= validLatitudeRange[1];
+    const isLongitudeValid = longitude >= validLongitudeRange[0] && longitude <= validLongitudeRange[1];
+
+    return isLatitudeValid && isLongitudeValid;
+  }
+
 }
+

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AxiosService {
       }
     });
 
+    //adiciona o token de autenticação na requisição
     this.axiosClient.interceptors.request.use(config => {
       if (this.authToken) {
         config.headers['Authorization'] = this.authToken;
@@ -27,6 +29,21 @@ export class AxiosService {
     }, error => {
       return Promise.reject(error);
     });
+
+    //verifica se o token expirou
+    this.axiosClient.interceptors.response.use(
+      (response: AxiosResponse) => response,
+      (error: AxiosError) => {
+        if (error.response && error.response.status === 401) {
+
+          console.log("Token expirado");
+
+          localStorage.removeItem("token");
+          localStorage.removeItem("isAuthenticated");
+        }
+
+      }
+    );
 
   }
 

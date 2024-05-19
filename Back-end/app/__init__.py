@@ -10,6 +10,7 @@ from .serializer import configure as config_ma
 from .jwt import configure_jwt as config_jwt
 
 from .Users import bp_users
+from .Routes import bp_routes
 
 def create_app():
     app = Flask(__name__)
@@ -27,6 +28,7 @@ def create_app():
     Migrate(app, app.db)
 
     app.register_blueprint(bp_users,url_prefix='/users')
+    app.register_blueprint(bp_routes,url_prefix='/routes')
 
 
     return app
