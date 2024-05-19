@@ -2,51 +2,54 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-primary sidebar collapse">
       <div class="position-sticky pt-3">
-        <div class="user-profile text-center">
-          <span><i class="icon icon-user" id=""></i></span>
-        </div>
-
-        <div class="text-center">
-          <h5 class="text-white">{{ user?.name || user?.email}}</h5>
+        <div class="user-profile text-center d-flex align-items-center justify-content-center">
+          <a routerLink="/">
+            <fa-icon [icon]="['fas', 'car']" class="icon-logo"></fa-icon>
+            <h5 class="ml-2 text-white">Rota 14</h5>
+         </a>
         </div>
 
         <ul class="nav flex-column mt-5">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
-              Dashboard
+            <a class="nav-link " aria-current="page" [routerLink]="['/dashboard']">
+              <fa-icon [icon]="['fas', 'tachometer-alt']"></fa-icon>
+              <span class="ml-4 p-1">Dashboard</span>
             </a>
           </li>
 
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/profile']" routerLinkActive="active">
-              Acessar Perfil
+              <fa-icon [icon]="['fas', 'user']"></fa-icon>
+              <span class="ml-2 p-1">Acessar Perfil</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/users']">
+              <fa-icon [icon]="['fas', 'users']"></fa-icon>
+              <span class="ml-2 p-1">Usuários</span>
             </a>
           </li>
 
           <li class="nav-item">
             <a class="nav-link" href="#">
-              Usuários
+              <fa-icon [icon]="['fas', 'route']"></fa-icon>
+              <span class="ml-2 p-1">Rotas</span>
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item raw">
             <a class="nav-link" href="#">
-              Rotas
+              <fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon>
+              <span class="ml-2 p-1">Sair</span>
             </a>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Sair
-            </a>
-          </li>
-
         </ul>
       </div>
     </nav>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">Rota 14: Gerencie suas viagens como o melhor sistema de rotas.</h1>
       </div>
       <router-outlet></router-outlet>
     </main>

@@ -117,4 +117,60 @@ export class UserService {
 
   }
 
+  async resetPassword(data: any): Promise<{ success: boolean, error?: number}> {
+    const url = "http://localhost:5000/";
+    try {
+      const req = await this.axios.post(url + "users/reset_password/" + this.userLoggedId, data);
+
+      return { success: true};
+
+    } catch (error: any) {
+
+      console.log(error);
+      console.log(error.response.data);
+
+      return { success: false, error: error.response.status };
+
+    }
+
+  }
+
+  async deleteUser(): Promise<{ success: boolean, error?: number }> {
+    const url = "http://localhost:5000/";
+    try {
+      await this.axios.delete(url + "users/" + this.userLoggedId);
+
+      this.logout();
+
+      return { success: true };
+
+    } catch (error: any) {
+
+      console.log(error);
+      console.log(error.response.data);
+
+      return { success: false, error: error.response.status };
+
+    }
+
+  }
+
+  async getUsers(): Promise<User[] | any> {
+    const url = "http://localhost:5000/";
+    try {
+      const req = await this.axios.get(url + "users/");
+
+      return req;
+
+    } catch (error: any) {
+
+      console.log(error);
+      console.log(error.response.data);
+
+      return [];
+
+    }
+
+  }
+
 }

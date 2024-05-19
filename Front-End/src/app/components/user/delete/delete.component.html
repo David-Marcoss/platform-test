@@ -1,0 +1,18 @@
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir este usuário? Ao conluir operação você perdera todos seus dados</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="deleteUser()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+

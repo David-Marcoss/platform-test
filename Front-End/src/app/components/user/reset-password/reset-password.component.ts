@@ -41,13 +41,28 @@ export class ResetPasswordComponent implements OnInit{
     })
   }
 
-  async editUser() {
+  async resetPasswordUser() {
     if (this.userForm.valid) {
+
       if (this.userForm.value.old_password == this.userForm.value.new_password) {
         this.toastr.warning('Senha atual é igual a nova senha!', 'Atenção!');
         return;
-      }
+      }else{
 
+        const response = await this.userService.resetPassword(this.userForm.value)
+
+        if(response.success){
+          this.toastr.success('Senha alterada com sucesso!', 'Faça login com a nova senha para acessar o sistema!');
+          this.userForm.reset()
+          this.userService.logout()
+
+          this.router.navigate(['/login'])
+
+        }else{
+          this.userForm.reset()
+          this.toastr.error('Verifique se digitou sua senha atual corretamente!', 'Erro ao alterar senha!');
+        }
+      }
     }
   }
 

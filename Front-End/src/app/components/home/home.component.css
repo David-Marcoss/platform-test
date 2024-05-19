@@ -72,16 +72,15 @@ body {
 }
 
 .user-profile {
-    text-align: center;
-    background-color: #5891ff;
-    border-radius: 50%;
-    font-size: 40px;
-    color: white;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    margin-bottom: 10px;
-    line-height: 100px;
-
+  margin-bottom: 2rem;
 }
 
+.user-profile .icon-logo {
+  font-size: 2rem;
+  color: white;
+}
+
+.user-profile h5 {
+  margin-left: 0.5rem;
+  color: white;
+}
