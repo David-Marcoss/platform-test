@@ -16,7 +16,7 @@ export class RoutesService {
     private axios: AxiosService,
     private http: HttpClient
   ) { }
-  apiKey: String = "AIzaSyCIr5YaPilFb3H9ptOVJAiVZcJP_RPz8uY&libraries"
+  apiKey: String = ""
   mainRoute: Route[] = [];
 
   map!: google.maps.Map;

@@ -1,19 +1,21 @@
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 
-db =  SQLAlchemy()
+db = SQLAlchemy()
 
 def configure(app):
     db.init_app(app)
     app.db = db
 
 class User(db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80),nullable=True)
+    name = db.Column(db.String(80), nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
+    routes = db.relationship('Route', back_populates='user', cascade='all, delete-orphan')
 
-    def __init__(self,email, password, name=""):
+    def __init__(self, email, password, name=""):
         self.name = name
         self.email = email
         self.password = self.generate_hash(password)  # A senha é criptografada apenas uma vez ao criar o usuário
@@ -22,11 +24,10 @@ class User(db.Model):
         return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     def verify_password(self, password):
-        
         return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
     
     def __repr__(self):
-            return '<User %r>' % self.username
+        return f'<User {self.name}>'
 
 class Route(db.Model):
     __tablename__ = 'routes'
@@ -43,7 +44,3 @@ class RoutePoint(db.Model):
     point_number = db.Column(db.Integer, nullable=False)
     route_id = db.Column(db.Integer, db.ForeignKey('routes.id'), nullable=False)
     route = db.relationship('Route', back_populates='points')
-
-User.routes = db.relationship('Route', back_populates='user', cascade='all, delete-orphan')
-
-    
