@@ -1,41 +1,93 @@
-## ![logo](https://www.webrota.com.br/assets/img/logo-min.png)   
+## 
+<div style="display: flex; align-items: center;">
+  <img src="Front-End/src/assets/img/car_logo.png" alt="logo" style="width: 50px; height: 50px;"/>
+  <span style="margin-left: 10px; font-size: 24px; font-weight: bold;">Rota 14</span>
+</div>
+<hr>
 
-Hey! Seja bem vindo, este é o playground de criatividade da **WebRota**, esse repositório é nossa porta de entrada.
+Seja bem-vindo ao repositório da aplicação Rota 14. Esta aplicação consiste em um sistema de gerenciamento de rotas, onde os usuários podem criar rotas de forma dinâmica e simples.
 
-## Como funciona?
+<img src="Front-End/src/assets/img/home.png" alt="home" style="width: 100%;"/>
 
-Faça um fork deste projeto, siga as instruções de desenvolvimento abaixo, aplique sua criatividade e suas técnicas ninja e nos mostre seu código. 
+## Arquitetura da Aplicação:
 
-## O que fazer?
+A arquitetura da aplicação é composta por uma arquitetura cliente-servidor, onde temos o cliente sendo o front-end da aplicação e o back-end sendo o servidor, além do banco de dados para a persistência dos dados.
 
-- Crie uma aplicação simples com conexão à um banco de sua escolha.
-- Implemente autenticação e coloque os usuários no banco.
-- Utilize o arquivo **positions.json** contido nesse repositório e faça um mapa através da API de sua escolha para renderiza-lo, criando marcadores em cada coordenada contida no JSON. Esse arquivo contém uma lista de coordenadas de um trajeto cronológico, seria muito interessante a renderização de uma linha polígono unindo-as.
-- Documente seu código e as instruções de como executa-lo.
+## Tecnologias Utilizadas no Projeto:
 
-### Bônus level
+Para a criação da arquitetura da aplicação foram utilizados:
 
-- Deixe sua aplicação preparada para containers.
-- Faça sua aplicação atualizar as posições de forma temporizada através do parsing da url de raw do json deste repositório.
-- Exiba a soma da distância dos pontos renderizados.
-- Permita a criação de novos pontos no mapa. 
+- Docker
+- Docker Compose
 
-## O que devo utilizar?
+Para o Front-end da aplicação foram utilizados:
 
-Nós acreditamos que bons desenvolvedores não são apenas usuários de linguagens ou de frameworks e que estão sempre preparados ao dinamismo. Utilize oque lhe deixar mais confortável e nos mostre seu potencial.
+- Angular 17
+- HTML
+- CSS
+- TypeScript
+- Bootstrap 5
+- Google Maps API
 
-Bom, não se apegue a essa questão, mas se estiver curioso à respeito de que utilizamos aqui no nosso dia à dia, segue a relação das principais.
+Para o Back-end da aplicação foram utilizados:
 
 - Python 3+
-- Flask + Marshmallow
-- Bootstrap 4
-- Angular 7
-- MySQL + Redis + RabbitMQ
+- Flask
+- Marshmallow
+- SQLAlchemy
 
-## E agora?
+Para o Banco de Dados da aplicação foi utilizado:
 
-Tudo pronto! Faça um pull request ou nos notifique do fork através do e-mail mauro@webrota.com.br
+- PostgreSQL
 
-Vem com a gente! 
+## Rodando o Projeto:
 
-:)
+### Dependências:
+
+É necessário ter instalado o Docker e o Docker Compose no seu computador para rodar o projeto.
+
+Para isso, acesse: [Instalar Docker](https://docs.docker.com/engine/install/) e [Instalar Docker Compose](https://docs.docker.com/compose/install/).
+
+Além disso, é necessário ter uma chave de API do Google Maps API para rodar o projeto. 
+
+Para obter a chave, acesse: [Obter chave Google Maps API](https://developers.google.com/maps/get-started?hl=pt-br).
+
+### Configurando o Projeto:
+
+1. Com sua chave de API configurada, acesse o arquivo em **platform-test/Front-End/src/environment/environment.ts** e coloque sua chave de API no campo **apiKey**:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: "http://localhost:5000/",
+  apiKey: "sua chave de api",
+};
+```
+
+2.Apos isso acesse o arquivo em <b>platform-test/Front-End/src/index.html</b> e adicione sua chave de api no script que está na linha 8 do arquivo.
+
+```
+ <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&libraries=visualization"></script>
+
+```
+
+### Configurando o projeto:
+
+Por fim dentro da pasta do projeto,execulte os comandos:
+
+```
+ docker build
+```
+
+```
+ docker compose
+```
+
+Se tudo ocorrer bem voce deve ser capaz de acessar aplicação no seu navegador acessando a rota:
+
+
+```
+ http://localhost:4201/
+```
+
+

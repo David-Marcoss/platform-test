@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environment/environment';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class LoginComponent implements OnInit{
 
       this.router.navigate(['/']);
     }
+
+
 
   }
 

@@ -84,7 +84,7 @@ export class UserService {
 
       console.log(this.apiUrl)
 
-      const req: any = await this.axios.post(this.apiUrl + "users/login", { email: user.email, password: user.password });
+      const req: any = await this.axios.post(environment.apiUrl + "users/login", { email: user.email, password: user.password });
 
       this.setAuth(req.access_token, req.userId);
 
