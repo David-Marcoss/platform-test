@@ -1,0 +1,46 @@
+<div class="grey-bg container-fluid">
+  <section id="minimal-statistics">
+    <div class="row">
+
+      <div class="profile-links">
+        <ul class="nav justify-content-center border-bottom">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/routes']">Rotas</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="getUserRoutes()" >Minhas Rotas</button>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/routes/create']">Criar Rota</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-12 mt-3 mb-1">
+        <h4 class="text-uppercase">Rotas Cadastradas</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12 justify-content-center" *ngFor="let route of routes">
+        <div class="card route-card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center icon-container">
+                  <i class="icon-pointer danger font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-center route-details">
+                  <h3>Rota: {{ route.name || route.id}}</h3>
+                  <span>Criador: {{ route.user.name || route.user.email}}</span>
+                  <div class="mt-2">
+                    <a [routerLink]="'/routes/' + route.id" class="btn btn-info btn-lg">Acessar rota</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

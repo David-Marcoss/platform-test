@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
+import { environment } from '../environment/environment';
 
 @Component({
   selector: 'app-root',
@@ -28,4 +29,6 @@ export class AppComponent implements OnInit{
       this.router.navigate(['/login']);
     }
   }
+
+
 }

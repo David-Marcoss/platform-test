@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { AfterViewInit, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,13 +20,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faCar, faTachometerAlt, faUser, faUsers, faRoute, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { DeleteComponent } from './components/user/delete/delete.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 
 import { HttpClientModule } from '@angular/common/http';
 import { RoutesComponent } from './components/route/routes/routes.component';
-
-
+import { MapRouteComponent } from './components/map-route/map-route.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ViewMapComponent } from './components/route/view-map/view-map.component';
+import { CreateRouteComponent } from './components/route/create-route/create-route.component';
+import { environment } from '../environment/environment';
 
 @NgModule({
   declarations: [
@@ -39,8 +41,11 @@ import { RoutesComponent } from './components/route/routes/routes.component';
     UserFormComponent,
     ResetPasswordComponent,
     DeleteComponent,
-    DashboardComponent,
     RoutesComponent,
+    MapRouteComponent,
+    DashboardComponent,
+    ViewMapComponent,
+    CreateRouteComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,4 +65,6 @@ export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faCar, faTachometerAlt, faUser, faUsers, faRoute, faSignOutAlt);
   }
+
+
 }

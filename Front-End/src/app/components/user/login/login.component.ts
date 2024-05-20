@@ -59,11 +59,8 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['/']);
       }else{
 
-        if(req.error == 422){
-          this.toastr.error('Verifique se seu e-mail e senha estão coretos!','Credenciais invalidas!');
-        }else{
-          this.toastr.error('Erro ao criar logar!');
-        }
+        this.toastr.error('Verifique se seu e-mail e senha estão coretos!','Credenciais invalidas!');
+
       }
 
     }

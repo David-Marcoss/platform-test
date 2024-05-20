@@ -4,7 +4,7 @@ import { Route } from '../models/Route';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, map } from 'rxjs';
-import { RouteInfos } from '../models/RouteInfos';
+import { environment } from '../../environment/environment';
 
 
 // RoutesService realiza as operações de mapas interagingo com a api do googlemaps.
@@ -19,7 +19,7 @@ export class RoutesService {
     private http: HttpClient
   ) { }
 
-  apiKey: String = ""
+  apiKey: String = environment.apiKey;
   mainRoute: Route[] = [];
 
   map!: google.maps.Map;
@@ -192,7 +192,7 @@ export class RoutesService {
   }
 
   isValidCoordinates(latitude: number, longitude: number): boolean {
-    // Faixas válidas para latitude e longitude
+
     const validLatitudeRange = [-90, 90];
     const validLongitudeRange = [-180, 180];
 

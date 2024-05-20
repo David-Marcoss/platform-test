@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/User';
 import { AxiosService } from './axios.service';
 
+import { environment } from '../../environment/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,8 +15,14 @@ export class UserService {
   authToken: string | undefined;
   userLoggedId: number | undefined;
 
+  apiUrl: string = environment.apiUrl;
+
   userAuthenticated(): boolean {
     return this.isAuthenticated;
+  }
+
+  getUserLoggedId(): number | undefined {
+    return this.userLoggedId;
   }
 
   setAuth(token: string, userLoggedId: number): void {
@@ -58,21 +66,25 @@ export class UserService {
   }
 
   async create(user: User): Promise<{ success: boolean, error?: number }> {
-    const url = "http://localhost:5000/";
+
     try {
-      await this.axios.post(url + "users/", user);
+      await this.axios.post(this.apiUrl + "users/", user);
       return { success: true };
-    } catch (error: any) {
+
+    }catch (error: any) {
+
       console.log(error);
-      return { success: false, error: error.response.status };
+
+      return { success: false};
     }
   }
 
   async login(user: User): Promise<{ success: boolean, error?: number }> {
-    const url = "http://localhost:5000/";
     try {
 
-      const req: any = await this.axios.post(url + "users/login", { email: user.email, password: user.password });
+      console.log(this.apiUrl)
+
+      const req: any = await this.axios.post(this.apiUrl + "users/login", { email: user.email, password: user.password });
 
       this.setAuth(req.access_token, req.userId);
 
@@ -80,15 +92,14 @@ export class UserService {
 
     } catch (error: any) {
 
-      return { success: false, error: error.response.status };
+      return { success: false };
     }
   }
 
   async getUser(): Promise<User | undefined>{
-    const url = "http://localhost:5000/";
 
     try {
-      const req: any = await this.axios.get(url + "users/" + this.userLoggedId);
+      const req: any = await this.axios.get(this.apiUrl + "users/" + this.userLoggedId);
 
       return req;
 
@@ -101,9 +112,8 @@ export class UserService {
   }
 
   async update(data: User): Promise<{ success: boolean, error?: number, user?: User | any }> {
-    const url = "http://localhost:5000/";
     try {
-      const req = await this.axios.put(url + "users/" + this.userLoggedId, data);
+      const req = await this.axios.put(this.apiUrl + "users/" + this.userLoggedId, data);
 
       const user = req;
 
@@ -112,36 +122,32 @@ export class UserService {
     } catch (error: any) {
 
       console.log(error);
-      console.log(error.response.data);
 
-      return { success: false, error: error.response.status };
+      return { success: false};
 
     }
 
   }
 
   async resetPassword(data: any): Promise<{ success: boolean, error?: number}> {
-    const url = "http://localhost:5000/";
     try {
-      const req = await this.axios.post(url + "users/reset_password/" + this.userLoggedId, data);
+      const req = await this.axios.post(this.apiUrl + "users/reset_password/" + this.userLoggedId, data);
 
       return { success: true};
 
     } catch (error: any) {
 
       console.log(error);
-      console.log(error.response.data);
 
-      return { success: false, error: error.response.status };
+      return { success: false };
 
     }
 
   }
 
   async deleteUser(): Promise<{ success: boolean, error?: number }> {
-    const url = "http://localhost:5000/";
     try {
-      await this.axios.delete(url + "users/" + this.userLoggedId);
+      await this.axios.delete(this.apiUrl + "users/" + this.userLoggedId);
 
       this.logout();
 
@@ -150,18 +156,17 @@ export class UserService {
     } catch (error: any) {
 
       console.log(error);
-      console.log(error.response.data);
 
-      return { success: false, error: error.response.status };
+
+      return { success: false};
 
     }
 
   }
 
   async getUsers(): Promise<User[] | any> {
-    const url = "http://localhost:5000/";
     try {
-      const req = await this.axios.get(url + "users/");
+      const req = await this.axios.get(this.apiUrl + "users/");
 
       return req;
 

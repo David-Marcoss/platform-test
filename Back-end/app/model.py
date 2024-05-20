@@ -31,6 +31,7 @@ class User(db.Model):
 
 class Route(db.Model):
     __tablename__ = 'routes'
+    name = db.Column(db.String(80), nullable=True)
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates='routes')

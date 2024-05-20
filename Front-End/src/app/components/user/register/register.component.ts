@@ -56,11 +56,8 @@ export class RegisterComponent implements OnInit{
         this.router.navigate(['/login']);
       }else{
 
-        if(req.error == 422){
-          this.toastr.error('Email já cadastrado!', 'Erro ao criar conta!');
-        }else{
-          this.toastr.error('Erro ao criar conta!');
-        }
+        this.toastr.error('Email já cadastrado!', 'Erro ao criar conta!');
+
       }
 
     }

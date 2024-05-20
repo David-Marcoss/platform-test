@@ -65,11 +65,9 @@ export class UserFormComponent implements OnInit{
         this.userForm.patchValue({ name: this.user?.name, email: this.user?.email });
         this.toastr.success('Usuário atualizado com sucesso!', 'Sucesso!');
       } else {
-        if (req.error === 422) {
+
           this.toastr.error('Erro ao atualizar usuário!');
-        } else {
-          this.toastr.error('Erro ao criar conta!');
-        }
+
       }
     }
   }

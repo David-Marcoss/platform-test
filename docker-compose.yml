@@ -19,7 +19,7 @@ services:
     build:
       context: ./Back-end/
     ports:
-      - 4200
+      - 5000:5000
     depends_on: 
       - db
     
@@ -27,9 +27,9 @@ services:
     container_name: front-end
 
     build:
-      context: ./Front-end/
+      context: ./Front-End/
     ports:
-      - 4500:4500
+      - "4201:4200"
     depends_on: 
       - back-end
 
