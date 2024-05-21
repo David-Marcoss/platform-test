@@ -42,7 +42,7 @@ export class RouteApiService {
     }));
 
     try {
-      const req = await this.axios.post<RouteData>(this.apiUrl + "routes/", { user_id: id, points: points_data });
+      const req = await this.axios.post<RouteData>(this.apiUrl + "routes/", { user_id: id, name: name, points: points_data });
 
       return { success: true, data: req };
 

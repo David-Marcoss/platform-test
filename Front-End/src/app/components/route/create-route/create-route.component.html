@@ -19,24 +19,32 @@
               <h5> Ponto de partida</h5>
               <div class="form-group">
                 <label for="startLat">Latitude</label>
-                <input type="text" id="startLat" formControlName="start_latitude" class="form-control">
+                <input type="text" id="startLat" formControlName="start_latitude" class="form-control"
+                [class.is-invalid]="routeForm.get('start_latitude')?.errors && routeForm.get('start_latitude')?.touched">
+                <div class="invalid-feedback input-invalid"> Preencha uma latitude valida </div>
               </div>
               <div class="form-group">
                 <label for="startLng">Longitude</label>
-                <input type="text" id="startLng" formControlName="start_longitude" class="form-control">
+                <input type="text" id="startLng" formControlName="start_longitude" class="form-control"
+                [class.is-invalid]="routeForm.get('start_longitude')?.errors && routeForm.get('start_longitude')?.touched">
+                <div class="invalid-feedback input-invalid"> Preencha uma longitude valida </div>
               </div>
 
               <h5> Ponto de Chegada </h5>
               <div class="form-group">
                 <label for="startLat">Latitude</label>
-                <input type="text" id="startLat" formControlName="end_latitude" class="form-control">
+                <input type="text" id="startLat" formControlName="end_latitude" class="form-control"
+                [class.is-invalid]="routeForm.get('end_latitude')?.errors && routeForm.get('end_latitude')?.touched">
+                <div class="invalid-feedback input-invalid"> Preencha uma latitude valida </div>
               </div>
               <div class="form-group">
                 <label for="startLng">Longitude</label>
-                <input type="text" id="startLng" formControlName="end_longitude" class="form-control">
+                <input type="text" id="startLng" formControlName="end_longitude" class="form-control"
+                [class.is-invalid]="routeForm.get('end_longitude')?.errors && routeForm.get('end_longitude')?.touched">
+                <div class="invalid-feedback input-invalid"> Preencha uma longitude valida </div>
               </div>
 
-              <button type="submit" class="btn btn-success">Enviar</button>
+              <button type="submit" class="btn btn-success" [disabled]="!routeForm.valid" >Enviar</button>
 
             </form>
 

@@ -14,6 +14,7 @@ def create_route():
 
     user_id = data.get('user_id')
     points_data = data.get('points')
+    name = data.get('name')
 
     if not user_id or not points_data:
         return jsonify({"error": "user_id and points are required"}), 400
@@ -22,7 +23,7 @@ def create_route():
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    route = Route(user_id=user_id)
+    route = Route(user_id=user_id, name=name)
     current_app.db.session.add(route)
     current_app.db.session.flush() 
 
