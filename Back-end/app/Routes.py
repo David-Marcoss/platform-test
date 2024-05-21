@@ -8,7 +8,7 @@ from marshmallow import ValidationError
 bp_routes = Blueprint("routes", __name__)
 
 @bp_routes.route("/", methods=["POST"])
-#@jwt_required()
+@jwt_required()
 def create_route():
     data = request.get_json()
 
@@ -51,6 +51,7 @@ def create_route():
 
 
 @bp_routes.route("/", methods=["GET"])
+@jwt_required()
 def get_all_routes():
     routes = Route.query.all()
     route_schema = RouteSchema(many=True)
@@ -58,6 +59,7 @@ def get_all_routes():
     return jsonify(result), 200
 
 @bp_routes.route("/<int:route_id>", methods=["GET"])
+@jwt_required()
 def get_route_by_id(route_id):
     route = Route.query.get(route_id)
     if not route:
@@ -67,6 +69,7 @@ def get_route_by_id(route_id):
     return jsonify(result), 200
 
 @bp_routes.route("/user/<int:user_id>", methods=["GET"])
+@jwt_required()
 def get_routes_by_user(user_id):
     user = User.query.get(user_id)
     if not user:
