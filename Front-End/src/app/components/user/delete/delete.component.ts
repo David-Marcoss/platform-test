@@ -25,6 +25,7 @@ export class DeleteComponent {
     try {
       await this.userService.deleteUser();
       this.userService.logout();
+      this.router.navigate(["/login"]);
       this.toastr.success('Conta deletada com sucesso');
 
     } catch (error) {

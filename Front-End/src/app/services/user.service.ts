@@ -181,4 +181,17 @@ export class UserService {
 
   }
 
+  async validateTokenAuthentication(): Promise<boolean>{
+
+    try {
+      const req: any = await this.axios.get(this.apiUrl + "users/" + this.userLoggedId);
+
+      return true;
+
+    } catch (error) {
+
+      return false
+    }
+  }
+
 }
