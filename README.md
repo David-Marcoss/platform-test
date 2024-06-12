@@ -76,12 +76,9 @@ export const environment = {
 Por fim dentro da pasta do projeto,execulte os comandos:
 
 ```
- docker build
+ docker compose up --build
 ```
 
-```
- docker compose
-```
 
 Se tudo ocorrer bem voce deve ser capaz de acessar aplicação no seu navegador acessando a rota:
 
